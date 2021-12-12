@@ -20,7 +20,6 @@ export * from './constants/schemes.js';
 export * from './types/ec/AffinePoint.js';
 export * from './types/ec/EC.js';
 export * from './types/ec/JacobianPoint.js';
-export * from './types/errors/OperatorError.js';
 export * from './types/HashInfo.js';
 export * from './types/PrivateKey.js';
 export * from './types/schemes/AugSchemeMPL.js';

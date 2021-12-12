@@ -1,19 +1,26 @@
 {
     "name": "@rigidity/bls-signatures",
-    "version": "1.0.0",
+    "author": "rigidity",
+    "version": "1.0.1",
+    "repository": "https://github.com/Rigidity/bls-signatures.git",
     "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts",
     "license": "MIT",
     "type": "module",
     "scripts": {
         "test": "mocha './dist/test/**/*.js' --require source-map-support/register --recursive --timeout 0"
     },
+    "files": [
+        "dist"
+    ],
     "devDependencies": {
         "@types/chai": "^4.2.22",
         "@types/mocha": "^9.0.0",
         "@types/node": "^16.11.9",
-        "chai": "^4.3.4",
         "mocha": "^9.1.3",
         "source-map-support": "^0.5.21"
     },
-    "dependencies": {}
+    "dependencies": {
+        "chai": "^4.3.4"
+    }
 }

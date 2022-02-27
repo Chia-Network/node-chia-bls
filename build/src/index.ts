@@ -1544,6 +1544,11 @@ export class JacobianPoint {
         );
     }
 
+    public getFingerprint(): number {
+        const bytes = this.toBytes();
+        return bytesToInt(hash256(bytes).slice(0, 4), 'big');
+    }
+
     public toAffine(): AffinePoint {
         return this.isInfinity
             ? new AffinePoint(

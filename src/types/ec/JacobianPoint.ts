@@ -1,11 +1,13 @@
 import { assert } from 'chai';
 import {
     AffinePoint,
+    bytesToInt,
     defaultEc,
     defaultEcTwist,
     EC,
     Fq,
     Fq2,
+    hash256,
     scalarMultJacobian,
     signFq,
     signFq2,
@@ -155,6 +157,11 @@ export class JacobianPoint {
             this.isOnCurve() &&
             this.multiply(this.ec.n).equals(JacobianPoint.infinityG2())
         );
+    }
+
+    public getFingerprint(): number {
+        const bytes = this.toBytes();
+        return bytesToInt(hash256(bytes).slice(0, 4), 'big');
     }
 
     public toAffine(): AffinePoint {

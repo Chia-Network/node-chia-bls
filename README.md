@@ -6,7 +6,7 @@ A browser friendly implementation of bls-signatures in TypeScript, based off of 
 
 ## Introduction
 
-BLS Signatures is a cryptographic library used by projects and blockchains such as the Chia Network. It is a type of [elliptic curve cryptography](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography).
+BLS Signatures is a cryptographic library used by projects and blockchains such as the [Chia Network](https://chia.net). It is a type of [elliptic curve cryptography](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography).
 
 This particular implementation is written with TypeScript, and is not bindings to native code. This allows it to be used in the browser as well. However, if you prefer native bindings, you should check out [this library](https://github.com/Chia-Mine/bls-signatures) instead.
 

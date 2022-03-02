@@ -228,6 +228,10 @@ This scheme is from the BLS spec in the IETF. PopSchemeMPL is secure, but it req
 -   `privateKeys` is an `Array<PrivateKey>`.
 -   Returns an aggregated `PrivateKey`.
 
+### constructor(value)
+
+-   `value` is a `bigint`.
+
 ### getG1()
 
 -   Returns a derived `JacobianPoint` public key.

@@ -1,4 +1,4 @@
-import { Fq, Fq2, q } from '../internal.js';
+import { Fq, Fq2, q } from '../internal';
 
 export const xnum = [
     new Fq2(

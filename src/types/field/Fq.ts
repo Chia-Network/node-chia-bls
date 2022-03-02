@@ -3,10 +3,12 @@ import {
     bigIntToBytes,
     bytesToBigInt,
     Field,
+    fromHex,
     mod,
     modPow,
     OperatorError,
-} from '../../internal.js';
+    toHex,
+} from '../../internal';
 
 export class Fq extends Field<Fq> {
     public static nil = new Fq(1n, 0n);
@@ -19,13 +21,13 @@ export class Fq extends Field<Fq> {
         this.value = mod(value, Q);
     }
 
-    public fromBytes(Q: bigint, bytes: Buffer): this {
+    public fromBytes(Q: bigint, bytes: Uint8Array): this {
         if (bytes.length !== 48) throw new RangeError('Expected 48 bytes.');
         return new Fq(Q, bytesToBigInt(bytes, 'big')) as this;
     }
 
     public fromHex(Q: bigint, hex: string): this {
-        return Fq.nil.fromBytes(Q, Buffer.from(hex, 'hex')) as this;
+        return Fq.nil.fromBytes(Q, fromHex(hex)) as this;
     }
 
     public fromFq(_Q: bigint, fq: this): this {
@@ -44,7 +46,7 @@ export class Fq extends Field<Fq> {
         return new Fq(this.Q, this.value) as this;
     }
 
-    public toBytes(): Buffer {
+    public toBytes(): Uint8Array {
         return bigIntToBytes(this.value, 48, 'big');
     }
 
@@ -53,7 +55,7 @@ export class Fq extends Field<Fq> {
     }
 
     public toHex(): string {
-        return this.toBytes().toString('hex');
+        return toHex(this.toBytes());
     }
 
     public toString(): string {

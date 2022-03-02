@@ -1,22 +1,24 @@
-import { assert } from 'chai';
 import {
     AffinePoint,
+    assert,
     bytesToInt,
     defaultEc,
     defaultEcTwist,
     EC,
     Fq,
     Fq2,
+    fromHex,
     hash256,
     scalarMultJacobian,
     signFq,
     signFq2,
+    toHex,
     yForX,
-} from '../../internal.js';
+} from '../../internal';
 
 export class JacobianPoint {
     public static fromBytes(
-        bytes: Buffer,
+        bytes: Uint8Array,
         isExtension: boolean,
         ec: EC = defaultEc
     ): JacobianPoint {
@@ -62,11 +64,7 @@ export class JacobianPoint {
         isExtension: boolean,
         ec: EC = defaultEc
     ): JacobianPoint {
-        return JacobianPoint.fromBytes(
-            Buffer.from(hex, 'hex'),
-            isExtension,
-            ec
-        );
+        return JacobianPoint.fromBytes(fromHex(hex), isExtension, ec);
     }
 
     public static generateG1(): JacobianPoint {
@@ -110,14 +108,14 @@ export class JacobianPoint {
     }
 
     public static fromBytesG1(
-        bytes: Buffer,
+        bytes: Uint8Array,
         isExtension: boolean = false
     ): JacobianPoint {
         return JacobianPoint.fromBytes(bytes, isExtension, defaultEc);
     }
 
     public static fromBytesG2(
-        bytes: Buffer,
+        bytes: Uint8Array,
         isExtension: boolean = true
     ): JacobianPoint {
         return JacobianPoint.fromBytes(bytes, isExtension, defaultEcTwist);
@@ -127,14 +125,14 @@ export class JacobianPoint {
         hex: string,
         isExtension: boolean = false
     ): JacobianPoint {
-        return JacobianPoint.fromBytesG1(Buffer.from(hex, 'hex'), isExtension);
+        return JacobianPoint.fromBytesG1(fromHex(hex), isExtension);
     }
 
     public static fromHexG2(
         hex: string,
         isExtension: boolean = true
     ): JacobianPoint {
-        return JacobianPoint.fromBytesG2(Buffer.from(hex, 'hex'), isExtension);
+        return JacobianPoint.fromBytesG2(fromHex(hex), isExtension);
     }
 
     constructor(
@@ -180,13 +178,13 @@ export class JacobianPoint {
               );
     }
 
-    public toBytes(): Buffer {
+    public toBytes(): Uint8Array {
         const point = this.toAffine();
         const output = point.x.toBytes();
         if (point.isInfinity) {
             const bytes = [0xc0];
             for (let i = 0; i < output.length - 1; i++) bytes.push(0);
-            return Buffer.from(bytes);
+            return Uint8Array.from(bytes);
         }
         const sign =
             point.y instanceof Fq2
@@ -197,7 +195,7 @@ export class JacobianPoint {
     }
 
     public toHex(): string {
-        return this.toBytes().toString('hex');
+        return toHex(this.toBytes());
     }
 
     public toString(): string {

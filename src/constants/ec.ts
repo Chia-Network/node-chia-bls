@@ -1,4 +1,4 @@
-import { EC, Fq, Fq2 } from '../internal.js';
+import { EC, Fq, Fq2 } from '../internal';
 
 export const x = -0xd201000000010000n;
 export const q =

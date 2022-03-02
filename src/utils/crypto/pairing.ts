@@ -7,7 +7,7 @@ import {
     Fq12,
     Fq2,
     JacobianPoint,
-} from '../../internal.js';
+} from '../../internal';
 
 export function doubleLineEval(
     R: AffinePoint,

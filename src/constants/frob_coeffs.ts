@@ -1,4 +1,4 @@
-import { AnyField, Fq, Fq2, Fq6, q } from '../internal.js';
+import { AnyField, Fq, Fq2, Fq6, q } from '../internal';
 
 export const frobCoeffs: Record<`${number},${number},${number}`, AnyField> = {
     '2,1,1': new Fq(q, -1n),

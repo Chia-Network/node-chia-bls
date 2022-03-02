@@ -7,11 +7,10 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "noImplicitOverride": true,
+        "isolatedModules": true,
         "strict": true,
-        "module": "ESNext",
         "moduleResolution": "node",
         "target": "ESNext",
-        "outDir": "dist"
-    },
-    "include": ["src", "test"]
+        "lib": ["ESNext", "DOM"]
+    }
 }

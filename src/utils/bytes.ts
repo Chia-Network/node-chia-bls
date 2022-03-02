@@ -1,4 +1,4 @@
-import { mod, modNumber } from '../internal.js';
+import { mod, modNumber } from '../internal';
 
 export type Endian = 'little' | 'big';
 
@@ -39,7 +39,7 @@ export function intToBytes(
     size: number,
     endian: Endian,
     signed: boolean = false
-): Buffer {
+): Uint8Array {
     if (value < 0 && !signed)
         throw new Error('Cannot convert negative number to unsigned.');
     if (Math.floor(value) !== value)
@@ -54,11 +54,11 @@ export function intToBytes(
     }
     var bytes = binary.match(/[01]{8}/g)!.map((match) => parseInt(match, 2));
     if (endian === 'little') bytes.reverse();
-    return Buffer.from(bytes);
+    return Uint8Array.from(bytes);
 }
 
 export function bytesToInt(
-    bytes: Buffer,
+    bytes: Uint8Array,
     endian: Endian,
     signed: boolean = false
 ): number {
@@ -78,8 +78,8 @@ export function bytesToInt(
     return sign === '1' && signed ? -result : result;
 }
 
-export function encodeInt(value: number): Buffer {
-    if (value === 0) return Buffer.from([]);
+export function encodeInt(value: number): Uint8Array {
+    if (value === 0) return Uint8Array.from([]);
     const length = (intBitLength(value) + 8) >> 3;
     let bytes = intToBytes(value, length, 'big', true);
     while (
@@ -90,7 +90,7 @@ export function encodeInt(value: number): Buffer {
     return bytes;
 }
 
-export function decodeInt(bytes: Buffer): number {
+export function decodeInt(bytes: Uint8Array): number {
     return bytesToInt(bytes, 'big', true);
 }
 
@@ -99,7 +99,7 @@ export function bigIntToBytes(
     size: number,
     endian: Endian,
     signed: boolean = false
-): Buffer {
+): Uint8Array {
     if (value < 0n && !signed)
         throw new Error('Cannot convert negative number to unsigned.');
     let binary = (value < 0n ? -value : value)
@@ -112,11 +112,11 @@ export function bigIntToBytes(
     }
     var bytes = binary.match(/[01]{8}/g)!.map((match) => parseInt(match, 2));
     if (endian === 'little') bytes.reverse();
-    return Buffer.from(bytes);
+    return Uint8Array.from(bytes);
 }
 
 export function bytesToBigInt(
-    bytes: Buffer,
+    bytes: Uint8Array,
     endian: Endian,
     signed: boolean = false
 ): bigint {
@@ -136,8 +136,8 @@ export function bytesToBigInt(
     return sign === '1' && signed ? -result : result;
 }
 
-export function encodeBigInt(value: bigint): Buffer {
-    if (value === 0n) return Buffer.from([]);
+export function encodeBigInt(value: bigint): Uint8Array {
+    if (value === 0n) return Uint8Array.from([]);
     const length = (bigIntBitLength(value) + 8) >> 3;
     let bytes = bigIntToBytes(value, length, 'big', true);
     while (
@@ -148,14 +148,66 @@ export function encodeBigInt(value: bigint): Buffer {
     return bytes;
 }
 
-export function decodeBigInt(bytes: Buffer): bigint {
+export function decodeBigInt(bytes: Uint8Array): bigint {
     return bytesToBigInt(bytes, 'big', true);
 }
 
-export function concatBytes(...lists: Buffer[]): Buffer {
+export function concatBytes(...lists: Uint8Array[]): Uint8Array {
     const bytes: Array<number> = [];
     for (const list of lists) {
         for (const byte of list) bytes.push(byte);
     }
-    return Buffer.from(bytes);
+    return Uint8Array.from(bytes);
+}
+
+export function bytesEqual(a: Uint8Array, b: Uint8Array): boolean {
+    return (
+        a.length === b.length && a.findIndex((byte, i) => b[i] !== byte) === -1
+    );
+}
+
+const HEX_STRINGS = '0123456789abcdef';
+const MAP_HEX: Record<string, number> = {
+    '0': 0,
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    a: 10,
+    b: 11,
+    c: 12,
+    d: 13,
+    e: 14,
+    f: 15,
+    A: 10,
+    B: 11,
+    C: 12,
+    D: 13,
+    E: 14,
+    F: 15,
+};
+
+export function toHex(bytes: Uint8Array): string {
+    return Array.from(bytes)
+        .map((b) => HEX_STRINGS[b >> 4] + HEX_STRINGS[b & 15])
+        .join('');
+}
+
+export function fromHex(hex: string): Uint8Array {
+    const bytes = new Uint8Array(Math.floor(hex.length / 2));
+    let i;
+    for (i = 0; i < bytes.length; i++) {
+        const a = MAP_HEX[hex[i * 2]];
+        const b = MAP_HEX[hex[i * 2 + 1]];
+        if (a === undefined || b === undefined) {
+            break;
+        }
+        bytes[i] = (a << 4) | b;
+    }
+    return i === bytes.length ? bytes : bytes.slice(0, i);
 }

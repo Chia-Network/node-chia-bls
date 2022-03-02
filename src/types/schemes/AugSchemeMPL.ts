@@ -10,30 +10,33 @@ import {
     JacobianPoint,
     keyGen,
     PrivateKey,
-} from '../../internal.js';
+} from '../../internal';
 
 export class AugSchemeMPL {
-    public static keyGen(seed: Buffer): PrivateKey {
+    public static keyGen(seed: Uint8Array): PrivateKey {
         return keyGen(seed);
     }
 
-    public static sign(privateKey: PrivateKey, message: Buffer): JacobianPoint {
+    public static sign(
+        privateKey: PrivateKey,
+        message: Uint8Array
+    ): JacobianPoint {
         const publicKey = privateKey.getG1();
         return coreSignMpl(
             privateKey,
-            Buffer.from([...publicKey.toBytes(), ...message]),
+            Uint8Array.from([...publicKey.toBytes(), ...message]),
             augSchemeDst
         );
     }
 
     public static verify(
         publicKey: JacobianPoint,
-        message: Buffer,
+        message: Uint8Array,
         signature: JacobianPoint
     ): boolean {
         return coreVerifyMpl(
             publicKey,
-            Buffer.from([...publicKey.toBytes(), ...message]),
+            Uint8Array.from([...publicKey.toBytes(), ...message]),
             signature,
             augSchemeDst
         );
@@ -45,15 +48,15 @@ export class AugSchemeMPL {
 
     public static aggregateVerify(
         publicKeys: JacobianPoint[],
-        messages: Buffer[],
+        messages: Uint8Array[],
         signature: JacobianPoint
     ): boolean {
         if (publicKeys.length !== messages.length || !publicKeys.length)
             return false;
-        const mPrimes: Array<Buffer> = [];
+        const mPrimes: Array<Uint8Array> = [];
         for (let i = 0; i < publicKeys.length; i++)
             mPrimes.push(
-                Buffer.from([...publicKeys[i].toBytes(), ...messages[i]])
+                Uint8Array.from([...publicKeys[i].toBytes(), ...messages[i]])
             );
         return coreAggregateVerify(
             publicKeys,

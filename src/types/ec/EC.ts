@@ -1,4 +1,4 @@
-import { AnyField, Fq, Fq2 } from '../../internal.js';
+import { AnyField, Fq, Fq2 } from '../../internal';
 
 export interface EC {
     q: bigint;

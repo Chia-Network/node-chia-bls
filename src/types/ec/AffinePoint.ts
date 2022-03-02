@@ -1,5 +1,5 @@
-import { assert } from 'chai';
 import {
+    assert,
     defaultEc,
     EC,
     Fq,
@@ -8,7 +8,7 @@ import {
     Fq6,
     JacobianPoint,
     scalarMultJacobian,
-} from '../../internal.js';
+} from '../../internal';
 
 export class AffinePoint {
     constructor(

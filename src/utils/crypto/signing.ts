@@ -1,26 +1,26 @@
-import { assert } from 'chai';
 import {
+    assert,
     atePairingMulti,
     defaultEc,
     Fq12,
     g2Map,
     JacobianPoint,
     PrivateKey,
-} from '../../internal.js';
+} from '../../internal';
 
 export function coreSignMpl(
     sk: PrivateKey,
-    message: Buffer,
-    dst: Buffer
+    message: Uint8Array,
+    dst: Uint8Array
 ): JacobianPoint {
     return g2Map(message, dst).multiply(sk.value);
 }
 
 export function coreVerifyMpl(
     pk: JacobianPoint,
-    message: Buffer,
+    message: Uint8Array,
     signature: JacobianPoint,
-    dst: Buffer
+    dst: Uint8Array
 ): boolean {
     if (!signature.isValid() || !pk.isValid()) return false;
     const q = g2Map(message, dst);
@@ -46,9 +46,9 @@ export function coreAggregateMpl(signatures: JacobianPoint[]): JacobianPoint {
 
 export function coreAggregateVerify(
     pks: JacobianPoint[],
-    ms: Buffer[],
+    ms: Uint8Array[],
     signature: JacobianPoint,
-    dst: Buffer
+    dst: Uint8Array
 ): boolean {
     if (pks.length !== ms.length || !pks.length) return false;
     if (!signature.isValid()) return false;

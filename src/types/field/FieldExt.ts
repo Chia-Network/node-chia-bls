@@ -1,16 +1,18 @@
-import { assert } from 'chai';
 import {
     AnyField,
+    assert,
     Field,
     Fq,
     Fq12,
     Fq2,
     Fq6,
+    fromHex,
     getFrobCoeff,
     modNumber,
     OperatorError,
     q,
-} from '../../internal.js';
+    toHex,
+} from '../../internal';
 
 export abstract class FieldExt<T extends Field<T>> extends Field<FieldExt<T>> {
     public abstract root: T;
@@ -35,13 +37,13 @@ export abstract class FieldExt<T extends Field<T>> extends Field<FieldExt<T>> {
         return this;
     }
 
-    public fromBytes(Q: bigint, bytes: Buffer): this {
+    public fromBytes(Q: bigint, bytes: Uint8Array): this {
         const length = this.extension * 48;
         if (bytes.length !== length) {
             throw new RangeError(`Expected ${length} bytes.`);
         }
         const embeddedSize = 48 * (this.extension / this.elements.length);
-        const elements: Array<Buffer> = [];
+        const elements: Array<Uint8Array> = [];
         for (let i = 0; i < this.elements.length; i++) {
             elements.push(
                 bytes.slice(i * embeddedSize, (i + 1) * embeddedSize)
@@ -56,7 +58,7 @@ export abstract class FieldExt<T extends Field<T>> extends Field<FieldExt<T>> {
     }
 
     public fromHex(Q: bigint, hex: string): this {
-        return this.fromBytes(Q, Buffer.from(hex, 'hex'));
+        return this.fromBytes(Q, fromHex(hex));
     }
 
     public fromFq(Q: bigint, fq: Fq): this {
@@ -94,12 +96,12 @@ export abstract class FieldExt<T extends Field<T>> extends Field<FieldExt<T>> {
         );
     }
 
-    public toBytes(): Buffer {
+    public toBytes(): Uint8Array {
         const bytes: Array<number> = [];
         for (let i = this.elements.length - 1; i >= 0; i--) {
             bytes.push(...this.elements[i].toBytes());
         }
-        return Buffer.from(bytes);
+        return Uint8Array.from(bytes);
     }
 
     public toBool(): boolean {
@@ -107,7 +109,7 @@ export abstract class FieldExt<T extends Field<T>> extends Field<FieldExt<T>> {
     }
 
     public toHex(): string {
-        return this.toBytes().toString('hex');
+        return toHex(this.toBytes());
     }
 
     public toString(): string {

@@ -1,31 +1,33 @@
-import { assert } from 'chai';
 import {
+    assert,
     bigIntToBytes,
     bytesToBigInt,
     defaultEc,
     extractExpand,
+    fromHex,
     JacobianPoint,
     mod,
-} from '../internal.js';
+    toHex,
+} from '../internal';
 
 export class PrivateKey {
     public static size = 32;
 
-    public static fromBytes(bytes: Buffer): PrivateKey {
+    public static fromBytes(bytes: Uint8Array): PrivateKey {
         return new PrivateKey(mod(bytesToBigInt(bytes, 'big'), defaultEc.n));
     }
 
     public static fromHex(hex: string): PrivateKey {
-        return PrivateKey.fromBytes(Buffer.from(hex, 'hex'));
+        return PrivateKey.fromBytes(fromHex(hex));
     }
 
-    public static fromSeed(seed: Buffer): PrivateKey {
+    public static fromSeed(seed: Uint8Array): PrivateKey {
         const length = 48;
         const okm = extractExpand(
             length,
-            Buffer.from([...seed, 0]),
-            Buffer.from('BLS-SIG-KEYGEN-SALT-', 'utf-8'),
-            Buffer.from([0, length])
+            Uint8Array.from([...seed, 0]),
+            new TextEncoder().encode('BLS-SIG-KEYGEN-SALT-'),
+            Uint8Array.from([0, length])
         );
         return new PrivateKey(mod(bytesToBigInt(okm, 'big'), defaultEc.n));
     }
@@ -54,12 +56,12 @@ export class PrivateKey {
         return JacobianPoint.generateG1().multiply(this.value);
     }
 
-    public toBytes(): Buffer {
+    public toBytes(): Uint8Array {
         return bigIntToBytes(this.value, PrivateKey.size, 'big');
     }
 
     public toHex(): string {
-        return this.toBytes().toString('hex');
+        return toHex(this.toBytes());
     }
 
     public toString(): string {

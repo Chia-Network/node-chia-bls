@@ -1,4 +1,4 @@
-import { Fq } from '../../internal.js';
+import { Fq } from '../../internal';
 
 export type AnyField = Field<AnyField>;
 
@@ -8,12 +8,12 @@ export abstract class Field<T extends Field<T>> {
 
     public abstract zero(Q: bigint): this;
     public abstract one(Q: bigint): this;
-    public abstract fromBytes(Q: bigint, bytes: Buffer): this;
+    public abstract fromBytes(Q: bigint, bytes: Uint8Array): this;
     public abstract fromHex(Q: bigint, hex: string): this;
     public abstract fromFq(Q: bigint, fq: Fq): this;
 
     public abstract clone(): this;
-    public abstract toBytes(): Buffer;
+    public abstract toBytes(): Uint8Array;
     public abstract toBool(): boolean;
     public abstract toHex(): string;
     public abstract toString(): string;

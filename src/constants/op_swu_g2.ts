@@ -1,4 +1,4 @@
-import { Fq, Fq2, q } from '../internal.js';
+import { Fq, Fq2, q } from '../internal';
 
 export const xi_2 = new Fq2(q, new Fq(q, -2n), new Fq(q, -1n));
 export const Ell2p_a = new Fq2(q, new Fq(q, 0n), new Fq(q, 240n));

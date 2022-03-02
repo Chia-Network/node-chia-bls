@@ -1,5 +1,6 @@
 import {
     basicSchemeDst,
+    bytesEqual,
     coreAggregateMpl,
     coreAggregateVerify,
     coreSignMpl,
@@ -10,20 +11,23 @@ import {
     JacobianPoint,
     keyGen,
     PrivateKey,
-} from '../../internal.js';
+} from '../../internal';
 
 export class BasicSchemeMPL {
-    public static keyGen(seed: Buffer): PrivateKey {
+    public static keyGen(seed: Uint8Array): PrivateKey {
         return keyGen(seed);
     }
 
-    public static sign(privateKey: PrivateKey, message: Buffer): JacobianPoint {
+    public static sign(
+        privateKey: PrivateKey,
+        message: Uint8Array
+    ): JacobianPoint {
         return coreSignMpl(privateKey, message, basicSchemeDst);
     }
 
     public static verify(
         publicKey: JacobianPoint,
-        message: Buffer,
+        message: Uint8Array,
         signature: JacobianPoint
     ): boolean {
         return coreVerifyMpl(publicKey, message, signature, basicSchemeDst);
@@ -35,14 +39,15 @@ export class BasicSchemeMPL {
 
     public static aggregateVerify(
         publicKeys: JacobianPoint[],
-        messages: Buffer[],
+        messages: Uint8Array[],
         signature: JacobianPoint
     ): boolean {
         if (publicKeys.length !== messages.length || !publicKeys.length)
             return false;
         for (const message of messages) {
             for (const match of messages) {
-                if (message !== match && message.equals(match)) return false;
+                if (message !== match && bytesEqual(message, match))
+                    return false;
             }
         }
         return coreAggregateVerify(

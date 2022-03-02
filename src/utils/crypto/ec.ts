@@ -1,6 +1,6 @@
-import { assert } from 'chai';
 import {
     AffinePoint,
+    assert,
     defaultEc,
     defaultEcTwist,
     EC,
@@ -8,7 +8,7 @@ import {
     Fq2,
     JacobianPoint,
     mod,
-} from '../../internal.js';
+} from '../../internal';
 
 export function yForX(x: Fq | Fq2, ec: EC = defaultEc): Fq | Fq2 {
     const u = x.multiply(x).multiply(x).add(ec.a.multiply(x)).add(ec.b) as
@@ -58,8 +58,8 @@ export function evalIso(
     zPows[0] = z.pow(0n) as Fq2;
     zPows[1] = z.pow(2n) as Fq2;
     for (let i = 2; i < zPows.length; i++) {
-        assert.notEqual(zPows[i - 1], null);
-        assert.notEqual(zPows[1], null);
+        assert(zPows[i - 1] !== null);
+        assert(zPows[1] !== null);
         zPows[i] = zPows[i - 1]?.multiply(zPows[1]) as Fq2;
     }
     for (const [i, item] of mapCoeffs.entries()) {
@@ -74,12 +74,12 @@ export function evalIso(
         }
         mapValues[i] = temp as Fq2;
     }
-    assert.equal(mapCoeffs[1].length + 1, mapCoeffs[0].length);
-    assert.notEqual(zPows[1], null);
-    assert.notEqual(mapValues[1], null);
+    assert(mapCoeffs[1].length + 1 === mapCoeffs[0].length);
+    assert(zPows[1] !== null);
+    assert(mapValues[1] !== null);
     mapValues[1] = mapValues[1]?.multiply(zPows[1]) as Fq2;
-    assert.notEqual(mapValues[2], null);
-    assert.notEqual(mapValues[3], null);
+    assert(mapValues[2] !== null);
+    assert(mapValues[3] !== null);
     mapValues[2] = mapValues[2]!.multiply(y) as Fq2;
     mapValues[3] = mapValues[3]!.multiply(z.pow(3n)) as Fq2;
     const Z = mapValues[1].multiply(mapValues[3]);

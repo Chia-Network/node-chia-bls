@@ -1,4 +1,4 @@
-import { FieldExt, Fq, Fq2 } from '../../internal.js';
+import { FieldExt, Fq, Fq2 } from '../../internal';
 
 export class Fq6 extends FieldExt<Fq2> {
     public static nil = new Fq6(1n, Fq2.nil, Fq2.nil, Fq2.nil);

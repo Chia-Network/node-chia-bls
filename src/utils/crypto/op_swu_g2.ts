@@ -1,5 +1,5 @@
-import { assert } from 'chai';
 import {
+    assert,
     defaultEcTwist,
     Ell2p_a,
     Ell2p_b,
@@ -18,7 +18,7 @@ import {
     xnum,
     yden,
     ynum,
-} from '../../internal.js';
+} from '../../internal';
 
 export function sgn0(x: Fq2): bigint {
     const sign0 = mod(x.elements[0].value, 2n) === 1n;
@@ -47,7 +47,7 @@ export function osswu2Help(t: Fq2): JacobianPoint {
         let y0 = sqrtCandidate.multiply(root) as Fq2;
         if (y0.pow(2n).multiply(gx0_den).equals(gx0_num)) {
             if (sgn0(y0) !== sgn0(t)) y0 = y0.negate();
-            assert.equal(sgn0(y0), sgn0(t));
+            assert(sgn0(y0) === sgn0(t));
             return new JacobianPoint(
                 x0_num.multiply(x0_den) as Fq | Fq2,
                 y0.multiply(x0_den.pow(3n)) as Fq | Fq2,
@@ -66,7 +66,7 @@ export function osswu2Help(t: Fq2): JacobianPoint {
         let y1 = eta.multiply(sqrtCandidate) as Fq2;
         if (y1.pow(2n).multiply(gx1_den).equals(gx1_num)) {
             if (sgn0(y1) !== sgn0(t)) y1 = y1.negate();
-            assert.equal(sgn0(y1), sgn0(t));
+            assert(sgn0(y1) === sgn0(t));
             return new JacobianPoint(
                 x1_num.multiply(x1_den) as Fq | Fq2,
                 y1.multiply(x1_den.pow(3n)) as Fq | Fq2,
@@ -92,7 +92,7 @@ export function optSwu2Map(t: Fq2, t2?: Fq2): JacobianPoint {
     return Pp.multiply(hEff);
 }
 
-export function g2Map(alpha: Buffer, dst: Buffer): JacobianPoint {
+export function g2Map(alpha: Uint8Array, dst: Uint8Array): JacobianPoint {
     const elements = Hp2(alpha, 2, dst).map((hh) => {
         const items = hh.map((value) => new Fq(q, value));
         return new Fq2(q, items[0], items[1]);

@@ -10,8 +10,8 @@
     "bundle": "dist/bundle/index.js",
     "types": "dist/index.d.ts",
     "exports": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/cjs/index.cjs"
     },
     "license": "MIT",
     "scripts": {

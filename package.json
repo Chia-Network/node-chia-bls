@@ -1,12 +1,12 @@
 {
     "name": "@rigidity/bls-signatures",
     "author": "rigidity",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "A browser friendly implementation of bls-signatures.",
     "repository": "https://github.com/Rigidity/bls-signatures.git",
     "source": "src/index.ts",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
+    "main": "dist/cjs/index.cjs",
+    "module": "dist/esm/index.mjs",
     "bundle": "dist/bundle/index.js",
     "types": "dist/index.d.ts",
     "exports": {
@@ -21,11 +21,13 @@
     },
     "targets": {
         "main": {
+            "optimize": false,
             "sourceMap": {
                 "inline": true
             }
         },
         "module": {
+            "optimize": false,
             "sourceMap": {
                 "inline": true
             }
@@ -34,6 +36,7 @@
             "context": "browser",
             "outputFormat": "global",
             "source": "src/browser.ts",
+            "optimize": false,
             "includeNodeModules": [
                 "jssha",
                 "randombytes"
@@ -45,6 +48,7 @@
         "test": {
             "context": "node",
             "source": "test/bls.ts",
+            "optimize": false,
             "sourceMap": {
                 "inline": true
             }

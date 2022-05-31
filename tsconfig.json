@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "moduleResolution": "node",
+        "target": "ESNext",
         "downlevelIteration": true,
         "esModuleInterop": true,
         "inlineSourceMap": true,
@@ -7,10 +9,6 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "noImplicitOverride": true,
-        "isolatedModules": true,
-        "strict": true,
-        "moduleResolution": "node",
-        "target": "ESNext",
-        "lib": ["ESNext", "DOM"]
+        "strict": true
     }
 }

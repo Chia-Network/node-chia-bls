@@ -153,7 +153,11 @@ export class JacobianPoint {
     public isValid(): boolean {
         return (
             this.isOnCurve() &&
-            this.multiply(this.ec.n).equals(JacobianPoint.infinityG2())
+            this.multiply(this.ec.n).equals(
+                this.x instanceof Fq
+                    ? JacobianPoint.infinityG1()
+                    : JacobianPoint.infinityG2()
+            )
         );
     }
 

@@ -24,7 +24,7 @@ import {
     sha512,
     signFq2,
     yForX,
-} from '../src/internal';
+} from '../src';
 
 const q = defaultEc.q;
 

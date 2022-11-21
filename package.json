@@ -1,77 +1,45 @@
 {
-    "name": "@rigidity/bls-signatures",
+    "name": "chia-bls",
     "author": "rigidity",
-    "version": "2.0.5",
+    "version": "1.0.0",
     "description": "A browser friendly implementation of bls-signatures.",
-    "repository": "https://github.com/Rigidity/bls-signatures.git",
+    "repository": "https://github.com/Chia-Network/bls-signatures-ts.git",
+    "license": "Apache-2.0",
     "source": "src/index.ts",
-    "main": "dist/cjs/index.cjs",
-    "module": "dist/esm/index.mjs",
-    "bundle": "dist/bundle/index.js",
-    "types": "dist/index.d.ts",
-    "exports": {
-        "import": "./dist/esm/index.mjs",
-        "require": "./dist/cjs/index.cjs"
-    },
-    "license": "MIT",
+    "main": "dist/src/index.cjs",
+    "module": "dist/src/index.mjs",
+    "types": "dist/src/index.d.ts",
     "scripts": {
-        "test": "mocha './dist/test/**/*.js' --require source-map-support/register --recursive --timeout 0",
         "build": "parcel build",
-        "watch": "parcel watch"
-    },
-    "targets": {
-        "main": {
-            "optimize": false,
-            "sourceMap": {
-                "inline": true
-            }
-        },
-        "module": {
-            "optimize": false,
-            "sourceMap": {
-                "inline": true
-            }
-        },
-        "bundle": {
-            "context": "browser",
-            "outputFormat": "global",
-            "source": "src/browser.ts",
-            "optimize": false,
-            "includeNodeModules": [
-                "jssha",
-                "randombytes"
-            ],
-            "sourceMap": {
-                "inline": true
-            }
-        },
-        "test": {
-            "context": "node",
-            "source": "test/bls.ts",
-            "optimize": false,
-            "sourceMap": {
-                "inline": true
-            }
-        }
+        "watch": "parcel watch",
+        "test": "parcel build --target test && mocha './dist/test/test.js' --require source-map-support/register --recursive --timeout 0"
     },
     "files": [
-        "dist",
-        "build/dist"
+        "dist/src"
     ],
+    "targets": {
+        "default": {
+            "distDir": "dist/src"
+        },
+        "test": {
+            "source": "test/test.ts",
+            "distDir": "dist/test",
+            "context": "node"
+        }
+    },
     "devDependencies": {
-        "@parcel/packager-ts": "2.6.0",
-        "@parcel/transformer-typescript-types": "2.6.0",
-        "@types/chai": "^4.3.1",
-        "@types/mocha": "^9.1.1",
+        "@parcel/packager-ts": "2.8.0",
+        "@parcel/transformer-typescript-types": "2.8.0",
+        "@types/chai": "^4.3.4",
+        "@types/mocha": "^10.0.0",
         "@types/randombytes": "^2.0.0",
-        "mocha": "^10.0.0",
-        "parcel": "^2.6.0",
-        "source-map-support": "^0.5.21",
-        "typescript": "^4.7.2"
+        "mocha": "^10.1.0",
+        "parcel": "^2.8.0",
+        "typescript": "^4.9.3"
     },
     "dependencies": {
-        "chai": "^4.3.6",
-        "jssha": "^3.2.0",
+        "chai": "^4.3.7",
+        "jssha": "^3.3.0",
         "randombytes": "^2.1.0"
     }
 }

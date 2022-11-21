@@ -165,8 +165,8 @@ export class JacobianPoint {
     public toAffine(): AffinePoint {
         return this.isInfinity
             ? new AffinePoint(
-                  Fq.nil.zero(this.ec.q),
-                  Fq.nil.zero(this.ec.q),
+                  this.x.zero(this.ec.q),
+                  this.y.zero(this.ec.q),
                   true,
                   this.ec
               )

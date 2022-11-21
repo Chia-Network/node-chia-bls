@@ -2,6 +2,8 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "target": "ESNext",
+        "module": "CommonJS",
+        "outDir": "dist",
         "downlevelIteration": true,
         "esModuleInterop": true,
         "inlineSourceMap": true,

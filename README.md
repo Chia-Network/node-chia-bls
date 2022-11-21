@@ -2,11 +2,11 @@
 
 [![npm package](https://nodei.co/npm/@rigidity/bls-signatures.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/@rigidity/bls-signatures/)
 
-A browser friendly implementation of bls-signatures in TypeScript, based off of [the Chia Network implementation written in Python](https://github.com/Chia-Network/bls-signatures/tree/main/python-impl).
+A browser friendly implementation of bls-signatures in TypeScript, based off of the [Python implementation](https://github.com/Chia-Network/bls-signatures/tree/main/python-impl).
 
 ## Introduction
 
-BLS Signatures is a cryptographic library used by projects and blockchains such as the [Chia Network](https://chia.net). It is a type of [elliptic curve cryptography](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography).
+BLS Signatures is a cryptographic library used by projects and blockchains such as the [Chia blockchain](https://chia.net). It is a type of [elliptic curve cryptography](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography).
 
 This particular implementation is written with TypeScript, and is not bindings to native code. This allows it to be used in the browser as well. However, if you prefer native bindings, you should check out [this library](https://github.com/Chia-Mine/bls-signatures) instead.
 

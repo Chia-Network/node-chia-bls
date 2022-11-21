@@ -9,6 +9,7 @@
     "main": "dist/src/index.cjs",
     "module": "dist/src/index.mjs",
     "types": "dist/src/index.d.ts",
+    "bundle": "dist/bundle.js",
     "scripts": {
         "build": "parcel build",
         "watch": "parcel watch",
@@ -25,6 +26,10 @@
             "source": "test/test.ts",
             "distDir": "dist/test",
             "context": "node"
+        },
+        "bundle": {
+            "source": "src/browser.ts",
+            "context": "browser"
         }
     },
     "devDependencies": {

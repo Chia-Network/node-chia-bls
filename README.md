@@ -1,6 +1,6 @@
 # BLS Signatures
 
-[![npm package](https://nodei.co/npm/@rigidity/bls-signatures.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/@rigidity/bls-signatures/)
+[![npm package](https://nodei.co/npm/chia-bls.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/chia-bls)
 
 A browser friendly implementation of bls-signatures in TypeScript, based off of the [Python implementation](https://github.com/Chia-Network/bls-signatures/tree/main/python-impl).
 

@@ -1,0 +1,68 @@
+name: 📦🚀 Build & Publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+  pull_request:
+    branches:
+      - '**'
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set common job env
+        uses: Chia-Network/actions/setjobenv@main
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Update version in package.json
+        if: env.RELEASE == 'true'
+        working-directory: ${{ github.workspace }}/js-bindings
+        run: |
+          jq --arg VER "$RELEASE_TAG" '.version=$VER' package.json > temp.json && mv temp.json package.json
+
+      - name: Install
+        run: npm install
+
+      - name: Build App
+        run: npm run build
+
+      - name: Upload dist to artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to NPM
+        if: env.FULL_RELEASE == 'true'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          npm publish --access public
+
+      - name: Upload to Release
+        if: env.RELEASE == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload \
+            $RELEASE_TAG \
+            dist/bundle.js
+
+      - name: Cleanup
+        if: always()
+        run:
+          rm ${{ github.workspace }}/js_build/js-bindings/.npmrc || true

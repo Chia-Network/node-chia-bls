@@ -31,7 +31,6 @@ jobs:
 
       - name: Update version in package.json
         if: env.RELEASE == 'true'
-        working-directory: ${{ github.workspace }}/js-bindings
         run: |
           jq --arg VER "$RELEASE_TAG" '.version=$VER' package.json > temp.json && mv temp.json package.json
 

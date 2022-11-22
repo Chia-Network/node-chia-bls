@@ -37,7 +37,7 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Build App
+      - name: Run Tests
         run: npm run test
 
       - name: Build App

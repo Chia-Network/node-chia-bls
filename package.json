@@ -5,9 +5,8 @@
     "description": "A browser friendly implementation of bls-signatures.",
     "repository": "https://github.com/Chia-Network/bls-signatures-ts.git",
     "license": "Apache-2.0",
+    "main": "dist/src/index.js",
     "source": "src/index.ts",
-    "main": "dist/src/index.cjs",
-    "module": "dist/src/index.mjs",
     "types": "dist/src/index.d.ts",
     "bundle": "dist/bundle.js",
     "scripts": {
@@ -19,8 +18,9 @@
         "dist/src"
     ],
     "targets": {
-        "default": {
-            "distDir": "dist/src"
+        "main": {
+            "distDir": "dist/src",
+            "context": "node"
         },
         "test": {
             "source": "test/test.ts",

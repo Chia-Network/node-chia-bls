@@ -6,6 +6,7 @@
     "repository": "https://github.com/Chia-Network/bls-signatures-ts.git",
     "license": "Apache-2.0",
     "main": "dist/src/index.js",
+    "source": "src/index.ts",
     "types": "dist/src/index.d.ts",
     "bundle": "dist/bundle.js",
     "scripts": {
@@ -17,8 +18,7 @@
         "dist/src"
     ],
     "targets": {
-        "default": {
-            "source": "src/index.ts",
+        "main": {
             "distDir": "dist/src",
             "context": "node"
         },

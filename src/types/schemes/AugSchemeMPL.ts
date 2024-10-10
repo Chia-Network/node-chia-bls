@@ -29,6 +29,18 @@ export class AugSchemeMPL {
         );
     }
 
+    public static sign_prepend(
+        privateKey: PrivateKey,
+        message: Uint8Array,
+        prependPublicKey: JacobianPoint
+    ): JacobianPoint {
+        return coreSignMpl(
+            privateKey,
+            Uint8Array.from([...prependPublicKey.toBytes(), ...message]),
+            augSchemeDst
+        );
+    }
+
     public static verify(
         publicKey: JacobianPoint,
         message: Uint8Array,

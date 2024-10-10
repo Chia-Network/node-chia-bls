@@ -42,6 +42,13 @@ This scheme is from the BLS spec in the IETF. AugSchemeMPL is used by the Chia N
 -   `message` is a `Uint8Array`.
 -   Returns a `JacobianPoint` signature.
 
+### static sign_prepend(privateKey, message, prependPublicKey)
+
+-   `privateKey` is a `PrivateKey`.
+-   `message` is a `Uint8Array`.
+-   `prependPublicKey` is a `JacobianPoint` public key.
+-   Returns a `JacobianPoint` signature.
+
 ### static verify(publicKey, message, signature)
 
 -   `publicKey` is a `JacobianPoint` public key.

@@ -740,6 +740,12 @@ describe('Readme', () => {
     const grandchildUPk = AugSchemeMPL.deriveChildPkUnhardened(childUPk, 0);
     it('AugSchemeMPL child keys', () =>
         assert(grandchildUPk.equals(grandchildU.getG1())));
+    const aggPk = pk1.add(pk2);
+    const aggSig1 = AugSchemeMPL.sign_prepend(sk1, message, aggPk);
+    const aggSig2 = AugSchemeMPL.sign_prepend(sk2, message, aggPk);
+    var prependAggSig = AugSchemeMPL.aggregate([aggSig1, aggSig2]);
+    it('AugSchemeMPL prepend verify', () =>
+        assert(AugSchemeMPL.verify(aggPk, message, prependAggSig)));
 });
 
 describe('Current', () => {
